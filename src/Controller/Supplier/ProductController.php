@@ -43,7 +43,6 @@ class ProductController extends BaseController
         $supplier = $this->getSupplier();
 
         $product = $this->getRepository('App:Product')->findBySupplier($supplier);
-        // dd($product);
 
         if (null === $product) {
             return $this->json(['message' => 'Product Not Found'], 404);
@@ -55,7 +54,7 @@ class ProductController extends BaseController
                 ],
             ];
 
-        $this->json($product, 200, [], $context);die();
+        return $this->json($product, 200, [], $context);
     }
 
     /**
