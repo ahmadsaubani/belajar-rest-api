@@ -1,0 +1,27 @@
+liip_imagine :
+  driver: imagick
+  loaders:
+    profile_photos:
+      flysystem:
+        filesystem_service: oneup_flysystem.profile_photos_filesystem
+  data_loader: profile_photos
+  cache: profile_photos
+  resolvers :
+    profile_photos:
+      flysystem:
+        filesystem_service: oneup_flysystem.profile_photos_cache_filesystem
+        root_url: '%env(RESOLVE_CACHE_URL)%'
+        cache_prefix: media/cache
+        visibility: public
+    default :
+      web_path : ~
+
+  filter_sets :
+    small:
+      quality: 75
+      filters:
+        thumbnail: { size: [300, 200], mode: outbound }
+    my_thumb :
+      quality : 75
+      filters :
+        thumbnail  : { size : [200, 100], mode : outbound }

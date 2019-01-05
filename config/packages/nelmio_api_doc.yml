@@ -1,0 +1,43 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: AhmadSaubani Test Apps
+            description: This is an awesome notes app!
+            version: 0.0.1
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                name: Authorization
+                in: header
+        paths:
+          /api/login_check:
+            post:
+              tags:
+                - Login
+              description: Login into the api.
+              produces:
+                - application/json
+              parameters:
+                - name: user
+                  description: User to login
+                  in: body
+                  required: true
+                  schema:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      password:
+                        type: string
+              responses:
+                '200':
+                  description: Login successful
+                  schema:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+    areas: # to filter documented routes
+        path_patterns:
+            - ^/register
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

@@ -1,0 +1,7 @@
+fos_rest:
+    versioning: true
+    routing_loader:
+        default_format: json
+    cache_dir: '%kernel.cache_dir%/fos_rest'
+    zone:
+        - { path: ^/api/* }

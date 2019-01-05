@@ -1,0 +1,18 @@
+oneup_flysystem:
+  adapters:
+    acme.flysystem_adapter:
+      local:
+        directory: "%kernel.project_dir%/var/cache/test"
+
+    acme.flysystem_adapter_cache:
+      local:
+        directory: "%kernel.project_dir%/var/cache/test"
+            
+  filesystems:
+    profile_photos_cache:
+      adapter: acme.flysystem_adapter_cache
+    profile_photos:
+      adapter: acme.flysystem_adapter
+    profile_photos_fs:
+      adapter: acme.flysystem_adapter
+      mount: profile_photos_fs

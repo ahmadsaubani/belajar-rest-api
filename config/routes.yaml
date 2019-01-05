@@ -1,0 +1,21 @@
+_liip_imagine:
+  resource: "@LiipImagineBundle/Resources/config/routing.yaml"
+
+app.swagger_ui:
+  path: /docs
+  methods: GET
+  defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+api_login_check:
+  path: /api/login_check
+
+team:
+  type: rest
+  resource: "../src/Controller/Customer"
+  prefix: /api
+
+supplier:
+  type: rest
+  resource: "../src/Controller/Supplier"
+  prefix: /api
+

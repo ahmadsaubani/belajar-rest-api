@@ -1,0 +1,8 @@
+vich_uploader:
+  db_driver: orm # or mongodb or propel or phpcr
+  storage: flysystem
+  mappings:
+    product_image:
+      uri_prefix: '/'
+      upload_destination: profile_photos_fs
+      namer: Vich\UploaderBundle\Naming\UniqidNamer

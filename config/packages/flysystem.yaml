@@ -1,0 +1,20 @@
+oneup_flysystem:
+  adapters:
+    acme.flysystem_adapter:
+      awss3v3:
+        client: acme.s3_client
+        bucket: '%env(NELMIO_BUCKET)%'
+        prefix: uploads
+
+    acme.flysystem_adapter_cache:
+      awss3v3:
+        client: acme.s3_client
+        bucket: '%env(NELMIO_BUCKET)%'
+  filesystems:
+    profile_photos_cache:
+      adapter: acme.flysystem_adapter_cache
+    profile_photos:
+      adapter: acme.flysystem_adapter
+    profile_photos_fs:
+      adapter: acme.flysystem_adapter
+      mount: profile_photos_fs

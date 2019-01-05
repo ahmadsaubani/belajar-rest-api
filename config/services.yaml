@@ -1,0 +1,83 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    app.form.registration:
+        class: App\Form\Type\RegistrationCustomerType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+    
+    App\Controller\Customer\RegistrationController:
+        arguments:
+            $userManager: '@fos_user.user_manager'
+            $formFactory: '@fos_user.registration.form.factory'
+        calls:
+            - [setContainer, ['@service_container']]
+
+    app.form.supplier_registration:
+        class: App\Form\Type\RegistrationSupplierType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    fos_user.supplier_registration.form.factory:
+        class: FOS\UserBundle\Form\Factory\FormFactory
+        arguments:
+            $name: 'fos_supplier_registration_form'
+            $type: 'App\Form\Type\RegistrationSupplierType'
+            $validationGroups:
+                - 'Registration'
+                - 'Default'
+
+    App\Controller\Supplier\RegistrationController:
+        arguments:
+            $userManager: '@fos_user.user_manager'
+            $formFactory: '@fos_user.supplier_registration.form.factory'
+    
+    app.form.simple_handler:
+        class: App\Service\FormHandler\FormHandler
+        arguments:
+            $formFactory: '@form.factory'
+            $requestStack: '@request_stack'
+
+    App\Service\FormHandler\FormHandlerInterface: '@app.form.simple_handler'
+    acme.s3_client:
+        class: Aws\S3\S3Client
+        arguments:
+            -
+                version: '2006-03-01' # or 'latest'
+                region: "eu-central-1" # 'eu-central-1' for example
+                endpoint: '%env(NELMIO_URL)%'
+                use_path_style_endpoint: true
+                credentials:
+                    key: '%env(NELMIO_KEY)%'
+                    secret: '%env(NELMIO_SECRET)%'
+
+    
+
