@@ -55,7 +55,7 @@ class ProductController extends BaseController
                 ],
             ];
 
-        return $this->json($product, 200, [], $context);
+        $this->json($product, 200, [], $context);die();
     }
 
     /**
