@@ -73,7 +73,6 @@ class Supplier
 
     public function __construct()
     {
-        $this->supplier = new ArrayCollection();
         $this->product = new ArrayCollection();
     }
 

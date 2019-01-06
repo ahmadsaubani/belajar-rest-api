@@ -38,13 +38,6 @@ class Product
     private $kodeSupplier;
 
     /**
-     * @ORM\Column(type="datetime")
-     * 
-     * @Groups({"Product"})
-     */
-    private $createdAt;
-
-    /**
      * @ORM\Column(type="string", length=255)
      * 
      * Groups({"Product"})
@@ -82,6 +75,14 @@ class Product
      */
     private $supplier;
 
+    /**
+     * @ORM\Column(type="datetime")
+     * 
+     * @Groups({"Product"})
+     */
+    private $createdAt;
+
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -112,18 +113,6 @@ class Product
     public function setKodeSupplier(string $kodeSupplier): self
     {
         $this->kodeSupplier = $kodeSupplier;
-
-        return $this;
-    }
-
-    public function getcreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setcreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -184,6 +173,18 @@ class Product
     public function setsupplier(?Supplier $supplier): self
     {
         $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    public function getcreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setcreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
