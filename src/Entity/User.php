@@ -36,7 +36,6 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
      * 
-     * @Assert\NotBlank(message="Please enter your name.")
      * @Assert\Length(
      *  min=3,
      *  max=255,

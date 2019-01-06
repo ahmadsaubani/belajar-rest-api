@@ -19,10 +19,3 @@
 ###> lexik/jwt-authentication-bundle ###
 # /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
-
-# Docker & Compose
-docker-compose.yml
-
-# Capistrano
-config/deploy/*.rb
-log/*.log

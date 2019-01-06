@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
@@ -22,6 +23,7 @@ class Customer
     /**
      * @ORM\Column(type="string", length=200)
      * 
+     * @Assert\NotBlank(message="Please enter your name.")
      * @Groups({"Customer"})
      */
     private $name;
@@ -44,17 +46,6 @@ class Customer
      */
     private $username;
 
-    /**
-     *
-     * @Groups({"Customer"})
-     */
-    private $phoneCountryCode;
-
-    /**
-     *
-     * @Groups({"Customer"})
-     */
-    private $phoneNumber;
 
     public function getId(): ?int
     {
@@ -95,22 +86,6 @@ class Customer
         $this->user = $user;
 
         return $this;
-    }
-
-    public function getPhoneNumber(): ?string
-    {
-        if (null === $this->user) {
-            return null;
-        }
-        return $this->user->getPhoneNumber();
-    }
-
-    public function getPhoneCountryCode(): ?string
-    {
-        if (null === $this->user) {
-            return null;
-        }
-        return $this->user->getPhoneCountryCode();
     }
 
     public function getUserName(): ?string

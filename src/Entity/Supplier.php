@@ -64,11 +64,6 @@ class Supplier
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MembershipType", mappedBy="supplier")
-     */
-    private $membershipType;
-
-    /**
      * 
      * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="supplier")
      *
@@ -79,7 +74,6 @@ class Supplier
     public function __construct()
     {
         $this->supplier = new ArrayCollection();
-        $this->membershipType = new ArrayCollection();
         $this->product = new ArrayCollection();
     }
 
@@ -157,37 +151,6 @@ class Supplier
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|MembershipType[]
-     */
-    public function getMembershipType(): Collection
-    {
-        return $this->membershipType;
-    }
-
-    public function addMembershipType(MembershipType $membershipType): self
-    {
-        if (!$this->membershipType->contains($membershipType)) {
-            $this->membershipType[] = $membershipType;
-            $membershipType->setSupplier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMembershipType(MembershipType $membershipType): self
-    {
-        if ($this->membershipType->contains($membershipType)) {
-            $this->membershipType->removeElement($membershipType);
-            // set the owning side to null (unless already changed)
-            if ($membershipType->getSupplier() === $this) {
-                $membershipType->setSupplier(null);
-            }
-        }
 
         return $this;
     }
